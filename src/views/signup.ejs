@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMS - Sign Up - Inventory Management System</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url("/images/homepageIMS.avif") no-repeat center center / cover;
+      animation: kenburns 12s infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    @keyframes kenburns {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.2) translate(-20px, -20px); }
+      100% { transform: scale(1) translate(0, 0); }
+    }
+
+    /* Home Button */
+    .homebtn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      border: 2px solid #f685a2;
+      padding: 6px 14px;
+      border-radius: 5px;
+      transition: 0.3s;
+      z-index: 3;
+    }
+    .homebtn:hover {
+      background: #f685a2;
+      color: #fff;
+    }
+
+    .signupheader, .signupbody {
+      position: relative;
+      z-index: 2; 
+    }
+
+    .signupheader {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .signupheader h1 {
+      font-size: 60px;
+      color: #f685a2;
+      margin: 0;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    }
+
+    .signupheader p {
+      color: #ffdae3;
+      font-size: 20px;
+      margin: 0;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 8px;
+    }
+
+    .signupheader p::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      height: 3px;
+      width: 120%;
+      background: #bb6379;
+      border-radius: 3px;
+    }
+
+    .signupbody form {
+      width: 320px;
+      background: rgba(0,0,0,.5);
+      padding: 20px;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .signupbody input,
+    .signupbody select {
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .signupbody input[type="submit"] {
+      font-size: 18px;
+      padding: 10px 30px;
+      background: #f685a2;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: block;
+      margin: 10px auto;   
+    }
+
+    .signupbody input[type="submit"]:hover {
+      background: #e57492;
+    }
+
+    label {
+      color: white;
+      font-size: 14px;
+    }
+
+    .signin-link {
+      margin-top: 15px;
+      text-align: center;
+      color: white;
+      font-size: 14px;
+    }
+
+    .signin-link a {
+      color: #ffdae3;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .signin-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔹 Home Button -->
+  <a href="/" class="homebtn">Home</a>
+
+  <div class="signupheader">
+    <h1>MEDISTOCK</h1>
+    <p>Medical Inventory Management System</p>
+  </div>
+
+  <div class="signupbody">
+    <form action="/create" method="post" onsubmit="return validateForm()">
+      <input type="text" placeholder="Enter User ID" name="userId" id="userId" required>
+      <input type="text" placeholder="Enter Username" name="username" id="username" required>
+      <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+      <label for="role">Select Role:</label>
+      <select name="role" id="role" required>
+        <option value="admin">Admin</option>
+        <option value="pharmacist">Pharmacist</option>
+        <option value="staff" selected>Staff</option>
+      </select>
+
+      <input type="email" placeholder="Enter Email" name="email" id="email" required>
+      <input type="submit" name="submit" value="SIGN UP">
+       <div class="signin-link">
+      Already have an account? <a href="/signin">Sign In here</a>
+    </div>
+    </form>
+
+   
+  </div>
+
+  <script src="/javascripts/script.js"></script>
+</body>
+</html>

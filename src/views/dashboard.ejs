@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - IMS</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 250px;
+      right: 0;
+      height: 70px;
+      background: linear-gradient(90deg, #fff, #f9f9f9);
+      color: #f685a2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .navbar h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      color: #f685a2;
+      font-weight: 700;
+      flex: 1;
+      text-align: center;
+    }
+    .navbar .user {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .navbar .user i {
+      color: #f685a2;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, #3d3737, #2a2525);
+      padding-top: 80px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      box-shadow: 4px 0 12px rgba(0,0,0,0.2);
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li {
+      border-bottom: 1px solid #444;
+    }
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: #eee;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .sidebar a i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+    }
+    .sidebar a:hover {
+      background: linear-gradient(90deg, #f685a2, #ff6b9d);
+      color: #fff;
+      padding-left: 30px;
+    }
+
+    /* Submenu */
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      background: #222;
+      transition: max-height 0.4s ease;
+    }
+    .submenu a {
+      font-size: 0.9rem;
+      padding-left: 50px;
+      color: #ccc;
+    }
+    .submenu a:hover {
+      background: linear-gradient(90deg, #f685a2, #ff6b9d);
+    }
+    .sidebar li.active .submenu {
+      max-height: 200px;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      margin-top: 70px;
+      padding: 30px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .main-content h2 {
+      color: #f685a2;
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+    .main-content h2::after {
+      content: "";
+      width: 100px;
+      height: 4px;
+      background: #f685a2;
+      display: block;
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+
+    .charts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 30px;
+    }
+
+    .chart-card {
+      background: linear-gradient(135deg, #fff, #f9f9f9);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .chart-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li>
+        <a href="#" onclick="toggleMenu(event)">
+          <i class="fa-solid fa-pills"></i> Medicine
+        </a>
+        <ul class="submenu">
+          <li><a href="/medicine/view">View Medicine</a></li>
+          <li><a href="/medicine/add">Add Medicine</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" onclick="toggleMenu(event)">
+          <i class="fa-solid fa-truck"></i> Supplier
+        </a>
+        <ul class="submenu">
+          <li><a href="/supplier/view">View Supplier</a></li>
+          <li><a href="/supplier/add">Add Supplier</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" onclick="toggleMenu(event)">
+          <i class="fa-solid fa-users"></i> Customer
+        </a>
+        <ul class="submenu">
+          <li><a href="/customer/view">View Customer</a></li>
+          <li><a href="/customer/add">Add Customer</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" onclick="toggleMenu(event)">
+          <i class="fa-solid fa-chart-line"></i> Sales
+        </a>
+        <ul class="submenu">
+          <li><a href="/sales/view">View Sale</a></li>
+          <li><a href="/sales/create">Create Sale</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="/report">
+          <i class="fa-solid fa-file-lines"></i> Report
+        </a>
+      </li>
+
+      <li>
+        <a href="/logout">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Medical Inventory Management System</h1>
+    <div class="user"><i class="fa-solid fa-user"></i> Welcome <%= user ? user.username : "Guest" %></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h2>Dashboard Overview</h2>
+
+    <div class="charts-container">
+
+      <div class="chart-card">
+        <h3>Monthly Sales</h3>
+        <canvas id="salesChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Medicine Stock Distribution</h3>
+        <canvas id="stockChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Customer Growth</h3>
+        <canvas id="customerChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Supplier Contributions</h3>
+        <canvas id="supplierChart"></canvas>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+
+    function toggleMenu(event) {
+      event.preventDefault();
+      event.target.closest("li").classList.toggle("active");
+    }
+
+    // Charts
+    new Chart(document.getElementById('salesChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Sales',
+          data: [120, 200, 150, 300, 250, 400],
+          borderColor: '#f685a2',
+          backgroundColor: 'rgba(246, 133, 162, 0.1)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+    });
+
+    new Chart(document.getElementById('stockChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Paracetamol', 'Amoxicillin', 'Ibuprofen', 'Others'],
+        datasets: [{
+          data: [300, 150, 100, 200],
+          backgroundColor: ['#f685a2', '#ffb347', '#6c5ce7', '#00cec9']
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('customerChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'New Customers',
+          data: [10, 20, 15, 30, 25, 40],
+          backgroundColor: '#74b9ff'
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('supplierChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Supplier A', 'Supplier B', 'Supplier C', 'Supplier D'],
+        datasets: [{
+          data: [40, 25, 20, 15],
+          backgroundColor: ['#fd79a8', '#fab1a0', '#55efc4', '#ffeaa7']
+        }]
+      }
+    });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Sale - IMS</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { background: #f8f9fa; font-family: Arial, sans-serif; }
+    .header { text-align: center; margin: 30px 0 20px; }
+    .header h1 { font-size: 32px; color: #f685a2; }
+    .form-container {
+      background: white; padding: 25px; border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1); max-width: 800px; margin: auto;
+    }
+    .btn-submit { background: #f685a2; border: none; color: white; }
+    .btn-submit:hover { background: #e57492; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Create New Sale</h1>
+    <p>Fill in the details below to record a sale</p>
+  </div>
+
+  <div class="container form-container">
+    <form action="/sales/create" method="POST" id="saleForm">
+      <div class="mb-3">
+        <label class="form-label">Select Medicine</label>
+        <select class="form-select" id="medicineId" name="medicineId" required onchange="updateTotal()">
+          <% medicines.forEach(med => { %>
+            <option value="<%= med._id %>" data-price="<%= med.price %>"><%= med.name %> (₹<%= med.price %>)</option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Select Customer</label>
+        <select class="form-select" name="customerId" required>
+          <% customers.forEach(cus => { %>
+            <option value="<%= cus._id %>"><%= cus.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input type="number" id="quantitySold" name="quantitySold" class="form-control" min="1" required oninput="updateTotal()">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Total Price (₹)</label>
+        <input type="number" id="totalPrice" name="totalPrice" class="form-control" readonly>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-submit">Create Sale</button>
+        <a href="/sales/view" class="btn btn-secondary">Back</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function updateTotal() {
+      const medSelect = document.getElementById("medicineId");
+      const price = parseFloat(medSelect.options[medSelect.selectedIndex].getAttribute("data-price")) || 0;
+      const qty = parseInt(document.getElementById("quantitySold").value) || 0;
+      document.getElementById("totalPrice").value = price * qty;
+    }
+  </script>
+</body>
+</html>

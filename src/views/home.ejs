@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Updated CSP to allow Font Awesome CDN -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+    font-src https://cdnjs.cloudflare.com;
+    connect-src 'self';
+  ">
+  <title>IMS Homepage - Medical Inventory Management System</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f9f9f9 0%, #e0e0e0 100%);
+      color: #333;
+    }
+
+    .header {
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(90deg, #f685a2, #ff6b9d);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .banner {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+
+    .banner::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url("/images/homepageIMS.avif") no-repeat center center / cover;
+      animation: kenburns 15s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .banner::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+      z-index: 1;
+    }
+
+    @keyframes kenburns {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.1) translate(-10px, -10px); }
+      100% { transform: scale(1) translate(0, 0); }
+    }
+
+    .homepagecontainer {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .bannerheader h1 {
+      font-size: 5rem;
+      color: #fff;
+      margin: 0;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .bannerheader p {
+      font-size: 1.8rem;
+      color: #ffdae3;
+      text-transform: uppercase;
+      margin-top: 15px;
+      letter-spacing: 3px;
+      font-weight: 300;
+    }
+
+    p.tagline {
+      margin-top: 30px;
+      font-size: 1.4rem;
+      color: #e0e0e0;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .cta-buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-buttons a {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .cta-buttons a i {
+      margin-right: 10px;
+    }
+
+    .cta-buttons a.signin {
+      background: linear-gradient(135deg, #f685a2, #ff6b9d);
+      color: white;
+    }
+
+    .cta-buttons a.signup {
+      background: transparent;
+      color: white;
+      border: 2px solid #f685a2;
+    }
+
+    .cta-buttons a:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .features {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+      text-align: center;
+      background: white;
+      border-radius: 20px;
+      margin-top: -50px;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .features h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 50px;
+      font-weight: 700;
+      position: relative;
+    }
+
+    .features h2::after {
+      content: "";
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: #f685a2;
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      justify-items: center;
+    }
+
+    .feature {
+      background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+      border-radius: 15px;
+      padding: 40px 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      text-align: center;
+      border: 1px solid #eee;
+    }
+
+    .feature:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+
+    .feature i {
+      font-size: 3rem;
+      color: #f685a2;
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+
+    .feature:hover i {
+      color: #ff6b9d;
+    }
+
+    .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .feature p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #222 0%, #333 100%);
+      color: #ccc;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 60px;
+    }
+
+    footer p {
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+
+    footer a {
+      color: #f685a2;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #ff6b9d;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .bannerheader h1 {
+        font-size: 3rem;
+      }
+      .bannerheader p {
+        font-size: 1.2rem;
+      }
+      p.tagline {
+        font-size: 1.1rem;
+      }
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .features {
+        padding: 60px 20px;
+        margin-top: -30px;
+      }
+      .features h2 {
+        font-size: 2rem;
+      }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header"></div>
+
+  <div class="banner">
+    <div class="homepagecontainer">
+      <div class="bannerheader">
+        <h1>MEDISTOCK</h1>
+        <p>Medical Inventory Management System</p>
+      </div>
+      <p class="tagline">
+        Track your goods throughout your entire supply chain — from purchasing to production to end sales.
+      </p>
+      <div class="cta-buttons">
+        <a href="/signin" class="signin"><i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+        <a href="/signup" class="signup"><i class="fa-solid fa-user-plus"></i> Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="features">
+    <h2>Why Choose MEDISTOCK?</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <h3>Smart Inventory</h3>
+        <p>Manage stock efficiently with real-time updates and low-stock alerts.</p>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-truck"></i>
+        <h3>Supply Chain Tracking</h3>
+        <p>Track items from suppliers to customers with transparency and accuracy.</p>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-users"></i>
+        <h3>User Roles</h3>
+        <p>Admin, Pharmacist, and Staff roles to maintain smooth workflow.</p>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-chart-line"></i>
+        <h3>Analytics</h3>
+        <p>Get detailed reports and insights for better decision-making.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Medical Inventory Management System (IMS). All rights reserved.</p>
+    <p><a href="/signin">Sign In</a> | <a href="/signup">Sign Up</a></p>
+  </footer>
+</body>
+</html>
