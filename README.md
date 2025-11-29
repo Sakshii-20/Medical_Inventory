@@ -24,6 +24,33 @@ This project allows you to manage medicines, customers, sales, and suppliers wit
 
 
 
+1️⃣ Clone the repository
+  ```bash
+   git clone <repository-url>
+   cd medical-inventory
+  ```
 
+
+2️⃣ Install dependencies
 ```bash
+npm install
+```
+
+3️⃣ Create a .env file
+```
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/medical_inventory
+JWT_SECRET=yourSecretKey
+```
+
+4️⃣Run the project
+```
+npm start
+```
+5️⃣Open in Browser
+```
 http://localhost:3000
+```
+
+
+
